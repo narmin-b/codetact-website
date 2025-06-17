@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeTact - Lesson</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+  <style>
+    :root {
+      /* High contrast color palette */
+      --primary-color: #000000;
+      --secondary-color: #ffffff;
+      --accent-color: #000000;
+      --text-color: #000000;
+      --background-color: #ffffff;
+      --border-color: #000000;
+      --error-color: #d32f2f;
+      --success-color: #1b5e20;
+      --focus-color: #000000;
+    }
+
+    .lesson-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .editor-container {
+      min-height: 400px;
+      height: auto;
+      box-sizing: border-box;
+    }
+    #monaco-editor {
+      height: 400px !important;
+      min-height: 200px;
+      border: 3px solid var(--border-color);
+      border-radius: 4px;
+      background: #fff;
+      z-index: 1;
+      display: block;
+    }
+    .output-container {
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background: var(--background-color);
+      border-radius: 4px;
+      border: 2px solid var(--border-color);
+    }
+    .output-box {
+      flex: 1 1 60%;
+      min-height: 0;
+      background: var(--background-color);
+      padding: 1rem;
+      font-family: monospace;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border-radius: 4px;
+      border: 2px solid var(--border-color);
+      color: var(--text-color);
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .run-button {
+      background: var(--primary-color);
+      color: var(--secondary-color);
+      padding: 0.8rem 1.5rem;
+      border: 3px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .run-button:hover {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+    }
+    .run-button:disabled {
+      background: #666666;
+      color: #ffffff;
+      cursor: not-allowed;
+    }
+    .language-selector {
+      padding: 0.8rem;
+      margin-right: 1rem;
+      border-radius: 4px;
+      border: 3px solid var(--border-color);
+      background: var(--background-color);
+      color: var(--text-color);
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .error-message {
+      color: var(--error-color);
+      margin-top: 0.5rem;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .success-message {
+      color: var(--success-color);
+      margin-top: 0.5rem;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    /* High contrast mode */
+    @media (prefers-contrast: high) {
+      :root {
+        --primary-color: #000000;
+        --secondary-color: #ffffff;
+        --accent-color: #ffffff;
+        --text-color: #ffffff;
+        --background-color: #000000;
+        --border-color: #ffffff;
+        --error-color: #ff0000;
+        --success-color: #00ff00;
+        --focus-color: #ffffff;
+      }
+    }
+    /* Focus styles for better keyboard navigation */
+    .run-button:focus,
+    .language-selector:focus {
+      outline: 3px solid var(--focus-color);
+      outline-offset: 2px;
+    }
+    /* Screen reader only class */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    /* Additional accessibility styles */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-color);
+      font-weight: bold;
+      line-height: 1.4;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+    a {
+      color: var(--primary-color);
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    a:hover, a:focus {
+      text-decoration: none;
+      outline: 3px solid var(--focus-color);
+      outline-offset: 2px;
+    }
+    .lesson-main-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .lesson-sidebar {
+      width: 320px;
+      padding: 2rem 1rem;
+      border-right: 2px solid #eee;
+      background: #fafafa;
+      overflow-y: auto;
+    }
+    .lesson-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+    .lesson-list li {
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #111;
+      background: #f0f0f0;
+      transition: background 0.2s;
+    }
+    .lesson-list li.active,
+    .lesson-list li:hover {
+      background: #111;
+      color: #fff;
+    }
+    .lesson-description {
+      font-size: 1rem;
+      color: #222;
+    }
+    .lesson-compiler {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+    .editor-container {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 0;
+      box-sizing: border-box;
+    }
+    .editor-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      margin-left: 0;
+    }
+    @media (max-width: 900px) {
+      .editor-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .editor-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: auto;
+        min-height: 400px;
+      }
+      .lesson-compiler {
+        padding: 1rem;
+      }
+    }
+    .language-selector {
+      display: none !important;
+    }
+    .ai-feedback-container {
+      width: 100%;
+      height: auto;
+      overflow-y: visible;
+      box-sizing: border-box;
+      padding: 1.25rem;
+      border: 2px solid #111;
+      border-radius: 8px;
+      background: #f6f6f6;
+      color: #111;
+      font-size: 1.1rem;
+      min-height: 2.5em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      word-break: break-word;
+      margin-top: 1.5rem;
+    }
+    .editor-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      margin-left: 0;
+    }
+    @media (max-width: 900px) {
+      .editor-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+    }
+    .output-container {
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .editor-container {
+      min-height: 400px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="main-nav">
+      <a href="index.html" aria-label="Go to homepage" style="display: flex; align-items: center; text-decoration: none;">
+        <img src="resources/logo.png" alt="CodeTact logo: the word CodeTact with four Braille dots" width="88" height="88" style="margin-right: 0.75rem; display: block;" />
+        <span style="font-size: 1.1rem; font-weight: bold; color: #111;">CodeTact</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="features.html">Features</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="lesson-main-container">
+    <aside class="lesson-sidebar">
+      <h2 id="course-title">Course: Python Basics</h2>
+      <ul class="lesson-list">
+        <li class="active">Introduction</li>
+        <li>Variables</li>
+        <li>Loops</li>
+        <li>Functions</li>
+        <li>Practice</li>
+      </ul>
+      <div class="lesson-description">
+        <h3>Introduction</h3>
+        <p>Welcome to Python Basics! In this lesson, you'll learn the fundamentals of Python programming, including syntax, variables, and how to write your first program.</p>
+      </div>
+    </aside>
+    <section class="lesson-compiler">
+      <!-- Controls row above the editor -->
+      <div class="editor-controls">
+        <label for="language-selector" class="sr-only">Select programming language</label>
+        <select id="language-selector" class="language-selector" aria-label="Select programming language">
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+          <option value="cpp">C++</option>
+          <option value="csharp">C#</option>
+        </select>
+        <button id="run-button" class="run-button">Run Code</button>
+        <span id="run-status" aria-live="polite"></span>
+      </div>
+      <!-- Code Editor and Output -->
+      <div class="editor-container">
+        <div id="monaco-editor" style="height: 400px;"></div>
+        <div class="output-container">
+          <div class="output-header">
+            <span>Output</span>
+          </div>
+          <div class="output-box" id="output-box"></div>
+          <!-- AI Feedback at the bottom -->
+          <div id="ai-feedback-container">
+            <strong>AI Feedback:</strong> <span id="ai-feedback">No feedback yet. Click "Check with AI" to get suggestions.</span>
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem;">
+              <button id="ai-check-btn" class="btn">Check with AI</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>CodeTact</h4>
+        <p>Empowering visually impaired learners to code with confidence</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="tools.html">Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: contact@codetact.com</p>
+        <p>Follow us on social media</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 CodeTact. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    let editorInstance;
+    const languageSelector = document.getElementById('language-selector');
+    const runButton = document.getElementById('run-button');
+    const aiCheckBtn = document.getElementById('ai-check-btn');
+    const aiFeedback = document.getElementById('ai-feedback');
+    const courseTitle = document.getElementById('course-title');
+
+    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' } });
+
+    require(['vs/editor/editor.main'], function () {
+      editorInstance = monaco.editor.create(document.getElementById('monaco-editor'), {
+        value: getDefaultCode(languageSelector.value),
+        language: getMonacoLanguage(languageSelector.value),
+        theme: 'vs', // Using default light theme for maximum contrast
+        automaticLayout: true,
+        minimap: { enabled: false },
+        fontSize: 18, // Increased font size for better readability
+        lineNumbers: 'on',
+        scrollBeyondLastLine: false,
+        renderWhitespace: 'selection',
+        accessibilitySupport: 'on',
+        wordWrap: 'on',
+        lineHeight: 28, // Increased line height
+        cursorStyle: 'line',
+        cursorBlinking: 'solid',
+        renderLineHighlight: 'all',
+        contextmenu: true,
+        quickSuggestions: true,
+        suggestOnTriggerCharacters: true,
+        acceptSuggestionOnEnter: 'on',
+        tabSize: 2,
+        insertSpaces: true,
+        detectIndentation: true,
+        trimAutoWhitespace: true,
+        formatOnPaste: true,
+        formatOnType: true,
+        scrollbar: {
+          vertical: 'visible',
+          horizontal: 'visible',
+          useShadows: true,
+          verticalScrollbarSize: 12,
+          horizontalScrollbarSize: 12
+        }
+      });
+    });
+
+    languageSelector.addEventListener('change', function() {
+      const language = this.value;
+      editorInstance.setValue(getDefaultCode(language));
+      monaco.editor.setModelLanguage(editorInstance.getModel(), getMonacoLanguage(language));
+    });
+
+    function getMonacoLanguage(language) {
+      switch(language) {
+        case 'python': return 'python';
+        case 'javascript': return 'javascript';
+        case 'cpp': return 'cpp';
+        case 'csharp': return 'csharp';
+        default: return 'python';
+      }
+    }
+
+    function getDefaultCode(language) {
+      switch(language) {
+        case 'python':
+          return 'print("Hello, CodeTact!")';
+        case 'javascript':
+          return 'console.log("Hello, CodeTact!");';
+        case 'cpp':
+          return '#include <iostream>\n\nint main() {\n    std::cout << "Hello, CodeTact!" << std::endl;\n    return 0;\n}';
+        case 'csharp':
+          return 'Console.WriteLine("Hello, CodeTact!");';
+        default:
+          return 'print("Hello, CodeTact!")';
+      }
+    }
+
+    async function runCode() {
+      const code = editorInstance.getValue();
+      const language = languageSelector.value;
+      const output = document.getElementById('output-box');
+      
+      runButton.disabled = true;
+      output.textContent = 'Running...';
+      output.className = 'output-box';
+
+      try {
+        const response = await fetch('http://localhost:3000/compile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ code, language })
+        });
+
+        const result = await response.json();
+        
+        if (result.error) {
+          output.innerHTML = `<span class="error-message">${result.error}</span>`;
+        } else {
+          output.innerHTML = `<span class="success-message">${result.output || 'No output'}</span>`;
+        }
+      } catch (error) {
+        output.innerHTML = `<span class="error-message">Error: ${error.message}</span>`;
+      } finally {
+        runButton.disabled = false;
+      }
+    }
+
+    aiCheckBtn.addEventListener('click', async () => {
+      aiFeedback.textContent = 'Checking with AI...';
+      const code = editorInstance.getValue();
+      const language = languageSelector.value;
+      try {
+        const response = await fetch('http://localhost:3000/ai-check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, language })
+        });
+        const data = await response.json();
+        if (data.feedback) {
+          aiFeedback.textContent = data.feedback;
+        } else {
+          aiFeedback.textContent = 'No feedback received.';
+        }
+      } catch (err) {
+        aiFeedback.textContent = 'AI check failed.';
+      }
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl/Cmd + Enter to run code
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runCode();
+      }
+    });
+
+    // Auto-select language based on course parameter
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    const courseParam = getQueryParam('course');
+
+    if (courseParam) {
+      // Map course param to language and title
+      const courseMap = {
+        'python-basics': { lang: 'python', title: 'Python Basics' },
+        'web-dev': { lang: 'javascript', title: 'Web Development' },
+        'java': { lang: 'java', title: 'Java Programming' },
+        'cpp': { lang: 'cpp', title: 'C++ Development' },
+        'csharp': { lang: 'csharp', title: 'C# Development' },
+        'python': { lang: 'python', title: 'Python Basics' },
+        'javascript': { lang: 'javascript', title: 'Web Development' },
+        // Add more as needed
+      };
+      const course = courseMap[courseParam];
+      if (course) {
+        languageSelector.value = course.lang;
+        courseTitle.textContent = `Course: ${course.title}`;
+      }
+    }
+
+    runButton.addEventListener('click', runCode);
+  </script>
+</body>
+</html>
