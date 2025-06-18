@@ -20,6 +20,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="features.html">Features</a></li>
       </ul>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
     </nav>
   </header>
 
@@ -82,5 +83,31 @@
       <p>© 2024 CodeTact. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.main-nav')) {
+          navLinks.classList.remove('active');
+        }
+      });
+      
+      // Close menu when clicking on a link
+      navLinks.addEventListener('click', function(event) {
+        if (event.target.tagName === 'A') {
+          navLinks.classList.remove('active');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -167,18 +167,27 @@
     }
     .lesson-main-container {
       display: flex;
-      max-width: 1200px;
-      margin: 2rem auto;
+      width: 100vw;
+      max-width: none;
+      margin: 0;
+      padding: 2.5rem 3vw;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      align-items: stretch;
     }
     .lesson-sidebar {
-      width: 320px;
-      padding: 2rem 1rem;
+      width: 420px;
+      padding: 3rem 2rem;
       border-right: 2px solid #eee;
       background: #fafafa;
-      overflow-y: auto;
+      overflow: hidden;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex: 1 0 0;
     }
     .lesson-list {
       list-style: none;
@@ -186,31 +195,66 @@
       margin-bottom: 2rem;
     }
     .lesson-list li {
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.5rem;
-      border-radius: 4px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
       color: #111;
       background: #f0f0f0;
       transition: background 0.2s;
+      font-size: 1.05rem;
     }
     .lesson-list li.active,
     .lesson-list li:hover {
       background: #111;
       color: #fff;
     }
+    .lesson-dropdown {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border: 3px solid #111;
+      border-radius: 6px;
+      background: #fff;
+      color: #111;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lesson-dropdown:hover {
+      background: #f0f0f0;
+    }
+    .lesson-dropdown:focus {
+      outline: 3px solid #111;
+      outline-offset: 2px;
+    }
+    .lesson-dropdown option {
+      padding: 1rem;
+      font-size: 1.05rem;
+      background: #fff;
+      color: #111;
+    }
     .lesson-description {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: #222;
+      line-height: 1.7;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      margin-bottom: 0;
+      flex: 1 1 auto;
     }
     .lesson-compiler {
-      flex: 1;
-      padding: 2rem;
+      flex: 2 1 0;
+      padding: 3rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       min-width: 0;
+      font-size: 1.15rem;
+      line-height: 1.7;
     }
     .editor-container {
       flex: 1 1 auto;
@@ -287,6 +331,175 @@
       height: 100%;
       box-sizing: border-box;
     }
+    .lesson-progress-container {
+      width: 100%;
+      padding: 2rem 3vw;
+      background: #f8f8f8;
+      border-bottom: 2px solid #eee;
+    }
+    .lesson-progress-labels {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .progress-segment-label {
+      flex: 1;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 0;
+      margin-top: 0;
+      z-index: 2;
+      position: relative;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: color 0.2s;
+    }
+    .progress-segment-label:hover {
+      color: #111;
+      text-decoration: underline;
+    }
+    .lesson-progress-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .progress-segment {
+      flex: 1;
+      height: 8px;
+      background: #ddd;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .progress-segment.filled {
+      background: #111;
+    }
+    .progress-segment:hover {
+      background: #bbb;
+    }
+    .progress-segment.filled:hover {
+      background: #333;
+    }
+    .progress-label {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .progress-segment:hover .progress-label {
+      opacity: 1;
+    }
+    .progress-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: #111;
+      border-radius: 4px;
+      z-index: 1;
+      transition: width 0.2s;
+    }
+    html, body {
+      height: 100%;
+    }
+    footer,
+    .footer-content,
+    .footer-section,
+    .footer-section h4,
+    .footer-section p,
+    .footer-section a,
+    .footer-bottom {
+      color: #fff !important;
+    }
+
+    .footer-section a {
+      text-decoration: underline;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+
+    .footer-section a:hover,
+    .footer-section a:focus {
+      color: #fff !important;
+      background: #222;
+      outline: 2px solid #fff;
+      text-decoration: none;
+    }
+    .lesson-static-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lesson-static-list li {
+      font-weight: bold;
+      color: #222;
+      background: #f0f0f0;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lesson-static-list li:hover {
+      background: #111;
+      color: #fff;
+    }
+    .lesson-nav-btn {
+      background: #fff;
+      color: #111;
+      border: 2px solid #111;
+      border-radius: 4px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      margin-left: 0.5rem;
+    }
+    .lesson-nav-btn:hover,
+    .lesson-nav-btn:focus {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .lesson-end-btn {
+      background: #1b5e20;
+      color: #fff;
+      border: 2px solid #1b5e20;
+      font-size: 1.2rem;
+      padding: 0.7rem 2rem;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .lesson-end-btn:hover,
+    .lesson-end-btn:focus {
+      background: #fff;
+      color: #1b5e20;
+      border-color: #1b5e20;
+    }
   </style>
 </head>
 <body>
@@ -303,25 +516,59 @@
         <li><a href="about.html">About</a></li>
         <li><a href="features.html">Features</a></li>
       </ul>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
     </nav>
   </header>
+
+  <div class="lesson-progress-container">
+    <div class="lesson-progress-labels">
+      <div class="progress-segment-label" data-lesson="introduction">Introduction</div>
+      <div class="progress-segment-label" data-lesson="variables">Variables</div>
+      <div class="progress-segment-label" data-lesson="loops">Loops</div>
+      <div class="progress-segment-label" data-lesson="functions">Functions</div>
+      <div class="progress-segment-label" data-lesson="practice">Practice</div>
+    </div>
+    <div class="lesson-progress-bar">
+      <div class="progress-segment" data-lesson="introduction">
+        <div class="progress-fill" style="width: 0%"></div>
+        <span class="progress-label">Introduction</span>
+      </div>
+      <div class="progress-segment" data-lesson="variables">
+        <div class="progress-fill" style="width: 0%"></div>
+        <span class="progress-label">Variables</span>
+      </div>
+      <div class="progress-segment" data-lesson="loops">
+        <div class="progress-fill" style="width: 0%"></div>
+        <span class="progress-label">Loops</span>
+      </div>
+      <div class="progress-segment" data-lesson="functions">
+        <div class="progress-fill" style="width: 0%"></div>
+        <span class="progress-label">Functions</span>
+      </div>
+      <div class="progress-segment" data-lesson="practice">
+        <div class="progress-fill" style="width: 0%"></div>
+        <span class="progress-label">Practice</span>
+      </div>
+    </div>
+  </div>
 
   <main class="lesson-main-container">
     <aside class="lesson-sidebar">
       <h2 id="course-title">Course: Python Basics</h2>
-      <ul class="lesson-list">
-        <li class="active">Introduction</li>
-        <li>Variables</li>
-        <li>Loops</li>
-        <li>Functions</li>
-        <li>Practice</li>
-      </ul>
+      <div id="current-lesson-title" style="font-size:1.3rem;font-weight:bold;margin-bottom:0.75rem;color:#111;">Introduction</div>
       <div class="lesson-description">
-        <h3>Introduction</h3>
-        <p>Welcome to Python Basics! In this lesson, you'll learn the fundamentals of Python programming, including syntax, variables, and how to write your first program.</p>
+        <p>Welcome to Python Basics! In this lesson, you'll learn the fundamentals of Python programming, including syntax, variables, and how to write your first program.<br><br>
+        Python is a versatile and beginner-friendly language used in web development, data science, automation, and more. You'll start by understanding what makes Python unique and why it's a great first language.<br><br>
+        By the end of this lesson, you'll be able to write and run your first Python script. Let's get started on your coding journey!<br><br>
+        Remember, practice is key to mastering programming. Don't hesitate to experiment with code examples and try things on your own.</p>
       </div>
     </aside>
     <section class="lesson-compiler">
+      <div class="lesson-nav-bar" style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.5rem; gap: 0.5rem;">
+        <button id="prev-lesson-btn" class="lesson-nav-btn" style="margin-right: 0.5rem; display: none;">Previous</button>
+        <button id="next-lesson-btn" class="lesson-nav-btn">Next</button>
+        <button id="end-lesson-btn" class="lesson-nav-btn lesson-end-btn" style="display: none; font-size: 1.2rem; padding: 0.7rem 2rem; font-weight: bold;">End</button>
+      </div>
       <!-- Controls row above the editor -->
       <div class="editor-controls">
         <label for="language-selector" class="sr-only">Select programming language</label>
@@ -342,13 +589,13 @@
             <span>Output</span>
           </div>
           <div class="output-box" id="output-box"></div>
-          <!-- AI Feedback at the bottom -->
-          <div id="ai-feedback-container">
-            <strong>AI Feedback:</strong> <span id="ai-feedback">No feedback yet. Click "Check with AI" to get suggestions.</span>
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem;">
-              <button id="ai-check-btn" class="btn">Check with AI</button>
-            </div>
-          </div>
+        </div>
+      </div>
+      <!-- AI Feedback at the bottom -->
+      <div id="ai-feedback-container">
+        <strong>AI Feedback:</strong> <span id="ai-feedback">No feedback yet. Click "Check with AI" to get suggestions.</span>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem;">
+          <button id="ai-check-btn" class="btn">Check with AI</button>
         </div>
       </div>
     </section>
@@ -387,6 +634,120 @@
     const aiCheckBtn = document.getElementById('ai-check-btn');
     const aiFeedback = document.getElementById('ai-feedback');
     const courseTitle = document.getElementById('course-title');
+
+    // Lesson data
+    const lessons = {
+      introduction: {
+        title: 'Introduction',
+        description: `Welcome to Python Basics! In this lesson, you'll learn the fundamentals of Python programming, including syntax, variables, and how to write your first program.<br><br>
+        Python is a versatile and beginner-friendly language used in web development, data science, automation, and more. You'll start by understanding what makes Python unique and why it's a great first language.<br><br>
+        By the end of this lesson, you'll be able to write and run your first Python script. Let's get started on your coding journey!<br><br>
+        Remember, practice is key to mastering programming. Don't hesitate to experiment with code examples and try things on your own.`
+      },
+      variables: {
+        title: 'Variables',
+        description: `Learn about variables in Python, how to declare them, and the different data types available. This lesson covers strings, numbers, and basic variable operations.<br><br>
+        Variables are like containers for storing data values. In Python, you don't need to declare the type of variable explicitly—Python figures it out for you.<br><br>
+        You'll see how to assign values, change them, and use variables in calculations. Understanding variables is essential for all programming tasks.<br><br>
+        Try creating variables of different types and printing their values to the screen!`
+      },
+      loops: {
+        title: 'Loops',
+        description: `Master Python loops including for loops and while loops. Learn how to iterate through data structures and control program flow with loop statements.<br><br>
+        Loops help you repeat actions efficiently. You'll learn the difference between for and while loops, and when to use each.<br><br>
+        Practice writing loops to process lists, repeat actions, and solve problems. Loops are a fundamental building block in programming.<br><br>
+        Challenge yourself to write a loop that prints numbers from 1 to 10!`
+      },
+      functions: {
+        title: 'Functions',
+        description: `Discover how to create and use functions in Python. Learn about parameters, return values, and how to organize your code into reusable blocks.<br><br>
+        Functions help you break your code into manageable pieces. You'll see how to define a function, call it, and pass information to it.<br><br>
+        Writing functions makes your code cleaner and easier to maintain. You'll also learn about scope and how variables work inside functions.<br><br>
+        Try writing a function that greets the user by name!`
+      },
+      practice: {
+        title: 'Practice',
+        description: `Put your Python knowledge to the test with hands-on exercises and coding challenges. Practice what you've learned in previous lessons.<br><br>
+        This section includes problems that require you to use variables, loops, and functions together.<br><br>
+        The more you practice, the more confident you'll become. Don't worry if you make mistakes—it's all part of the learning process.<br><br>
+        Good luck, and have fun coding!`
+      }
+    };
+
+    const lessonOrder = ['introduction', 'variables', 'loops', 'functions', 'practice'];
+    let currentLesson = 'introduction';
+
+    // Function to update lesson description
+    function updateLessonDescription(lessonKey) {
+      const lesson = lessons[lessonKey];
+      const descriptionDiv = document.querySelector('.lesson-description');
+      if (lesson && descriptionDiv) {
+        descriptionDiv.innerHTML = `<p>${lesson.description}</p>`;
+      }
+      // Update the static lesson title
+      const lessonTitleDiv = document.getElementById('current-lesson-title');
+      if (lessonTitleDiv) {
+        lessonTitleDiv.textContent = lesson.title;
+      }
+      // Reset scroll and progress fill
+      if (descriptionDiv) {
+        descriptionDiv.scrollTop = 0;
+      }
+      updateProgressFill(lessonKey, 0);
+    }
+
+    // Function to update progress bar fill and dot
+    function updateProgressFill(lessonKey, percent) {
+      const segment = document.querySelector(`.progress-segment[data-lesson="${lessonKey}"]`);
+      if (segment) {
+        const fill = segment.querySelector('.progress-fill');
+        if (fill) fill.style.width = `${percent * 100}%`;
+      }
+    }
+
+    // Function to handle scroll and update fill
+    function handleLessonScroll() {
+      const descriptionDiv = document.querySelector('.lesson-description');
+      if (!descriptionDiv) return;
+      const scrollTop = descriptionDiv.scrollTop;
+      const scrollHeight = descriptionDiv.scrollHeight - descriptionDiv.clientHeight;
+      const percent = scrollHeight > 0 ? Math.min(scrollTop / scrollHeight, 1) : 1;
+      updateProgressFill(currentLesson, percent);
+    }
+
+    // Attach scroll event
+    function attachScrollListener() {
+      const descriptionDiv = document.querySelector('.lesson-description');
+      if (descriptionDiv) {
+        descriptionDiv.removeEventListener('scroll', handleLessonScroll);
+        descriptionDiv.addEventListener('scroll', handleLessonScroll);
+      }
+    }
+
+    // Function to navigate to lesson
+    function navigateToLesson(lessonKey) {
+      currentLesson = lessonKey;
+      updateLessonDescription(lessonKey);
+      attachScrollListener();
+    }
+
+    // Handle progress segment clicks
+    document.querySelectorAll('.progress-segment').forEach(segment => {
+      segment.addEventListener('click', function() {
+        const lessonKey = this.getAttribute('data-lesson');
+        navigateToLesson(lessonKey);
+      });
+    });
+    // Handle progress label clicks
+    document.querySelectorAll('.progress-segment-label').forEach(label => {
+      label.addEventListener('click', function() {
+        const lessonKey = this.getAttribute('data-lesson');
+        navigateToLesson(lessonKey);
+      });
+    });
+
+    // Initialize with first lesson
+    navigateToLesson('introduction');
 
     require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' } });
 
@@ -548,6 +909,93 @@
     }
 
     runButton.addEventListener('click', runCode);
+
+    // Next/Previous lesson navigation
+    const prevBtn = document.getElementById('prev-lesson-btn');
+    const nextBtn = document.getElementById('next-lesson-btn');
+    const endBtn = document.getElementById('end-lesson-btn');
+
+    function updateNavButtons() {
+      const idx = lessonOrder.indexOf(currentLesson);
+      prevBtn.style.display = idx <= 0 ? 'none' : '';
+      if (idx >= lessonOrder.length - 1) {
+        nextBtn.style.display = 'none';
+        endBtn.style.display = '';
+      } else {
+        nextBtn.style.display = '';
+        endBtn.style.display = 'none';
+      }
+    }
+
+    prevBtn.addEventListener('click', function() {
+      const idx = lessonOrder.indexOf(currentLesson);
+      if (idx > 0) {
+        navigateToLesson(lessonOrder[idx - 1]);
+        updateNavButtons();
+      }
+    });
+    nextBtn.addEventListener('click', function() {
+      const idx = lessonOrder.indexOf(currentLesson);
+      if (idx < lessonOrder.length - 1) {
+        navigateToLesson(lessonOrder[idx + 1]);
+        updateNavButtons();
+      }
+    });
+    endBtn.addEventListener('click', function() {
+      // Check if all lessons are fully completed
+      let allComplete = true;
+      for (const lessonKey of lessonOrder) {
+        const segment = document.querySelector(`.progress-segment[data-lesson="${lessonKey}"]`);
+        if (segment) {
+          const fill = segment.querySelector('.progress-fill');
+          if (!fill || fill.style.width !== '100%') {
+            allComplete = false;
+            break;
+          }
+        }
+      }
+      if (allComplete) {
+        alert('Congratulations! You have completed the course.');
+      } else {
+        alert('Please finish all lessons before ending the course.');
+      }
+    });
+
+    // Update nav buttons on lesson change
+    const origNavigateToLesson = navigateToLesson;
+    navigateToLesson = function(lessonKey) {
+      currentLesson = lessonKey;
+      updateLessonDescription(lessonKey);
+      attachScrollListener();
+      updateNavButtons();
+    };
+
+    // Initialize nav buttons
+    updateNavButtons();
+    
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.main-nav')) {
+          navLinks.classList.remove('active');
+        }
+      });
+      
+      // Close menu when clicking on a link
+      navLinks.addEventListener('click', function(event) {
+        if (event.target.tagName === 'A') {
+          navLinks.classList.remove('active');
+        }
+      });
+    }
   </script>
 </body>
 </html>

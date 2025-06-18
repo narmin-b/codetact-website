@@ -68,6 +68,7 @@ header {
   padding: 4rem 2rem;
   background: linear-gradient(135deg, #222, #111);
   color: #fff;
+  margin-bottom: 3rem;
 }
 
 .hero h1 {
@@ -228,15 +229,80 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  header {
+    padding: 0.5rem 1rem;
+  }
+  
   .main-nav {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .main-nav a {
+    flex-shrink: 0;
+  }
+  
+  .main-nav img {
+    width: 60px !important;
+    height: 60px !important;
+    margin-right: 0.5rem !important;
+  }
+  
+  .main-nav span {
+    font-size: 1rem !important;
   }
 
   .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
     flex-direction: column;
     text-align: center;
-    gap: 1rem;
+    gap: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-top: 1px solid #eee;
+    z-index: 1000;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .nav-links a {
+    padding: 1rem;
+    display: block;
+    border-radius: 0;
+  }
+  
+  .nav-links a:hover,
+  .nav-links a.active {
+    background-color: #f5f5f5;
+    color: #111;
+  }
+  
+  /* Hamburger menu button */
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #111;
+  }
+  
+  .menu-toggle:focus {
+    outline: 2px solid #111;
+    outline-offset: 2px;
   }
 
   .hero h1 {
@@ -313,5 +379,231 @@ footer {
 }
 
 .category {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border: 2px solid #eee;
+  padding: 2.5rem 2rem 2rem 2rem;
   margin-bottom: 2.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.course-categories {
+  margin-top: 3rem;
+}
+
+.category h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111;
+  letter-spacing: 1px;
+}
+
+.courses-hero {
+  text-align: center;
+  margin: 0 auto 2.5rem auto;
+  max-width: 700px;
+  padding: 2.5rem 1rem 1.5rem 1rem;
+}
+.courses-hero h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #111;
+}
+.courses-hero p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0;
+}
+
+.tool-card-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border: 2px solid #eee;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+.tool-card-container:nth-child(even) {
+  background: #f8f8f8;
+}
+.tool-card {
+  text-align: center;
+}
+.tool-card h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111;
+  letter-spacing: 1px;
+}
+
+/* Tools page styles */
+.tools-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #222, #111);
+  color: #fff;
+}
+
+.tools-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.tools-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.tools-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tools-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #111;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.tools-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tool-features {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+  list-style-position: inside;
+}
+
+.tool-features li {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Features page styles */
+.features-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #222, #111);
+  color: #fff;
+}
+
+.features-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.features-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.features-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #111;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.feature-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: 2px solid #000;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  max-width: 350px;
+  flex: 1 1 300px;
+}
+
+.feature-card:hover, .feature-card:focus-within {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  border-color: #111;
+  transform: translateY(-4px) scale(1.01);
+}
+
+.feature-card h3 {
+  color: #111;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.feature-card p {
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.feature-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feature-card ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #333;
+}
+
+.feature-card ul li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #111;
+  font-weight: bold;
+}
+
+/* Responsive adjustments for tools and features */
+@media (max-width: 768px) {
+  .tools-hero h1,
+  .features-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .tools-section,
+  .features-section {
+    padding: 2rem 1rem;
+  }
+  
+  .feature-card {
+    max-width: 100%;
+  }
+  
+  .tool-card-container {
+    flex-direction: column !important;
+    padding: 1.5rem;
+  }
 }
