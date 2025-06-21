@@ -1,0 +1,818 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+/* Header and Navigation */
+header {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111;
+}
+
+.dots {
+  color: #111;
+  letter-spacing: 2px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: #111;
+  color: #fff;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #222, #111);
+  color: #fff;
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+  border: 2px solid #000;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.btn:hover, .btn:focus {
+  background-color: #fff;
+  color: #000;
+  border-color: #000;
+  box-shadow: 0 0 0 3px #000, 0 2px 4px rgba(0,0,0,0.08);
+  outline: none;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* Courses Section */
+.courses {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.courses h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #111;
+}
+
+.course-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: flex-start;
+  margin-bottom: 2rem;
+}
+
+.course-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: 2px solid #000;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.course-card:hover, .course-card:focus-within {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  border-color: #111;
+  transform: translateY(-4px) scale(1.01);
+}
+
+.course-card h3 {
+  color: #111;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.course-card p, .course-features li {
+  color: #000000;
+  font-size: 0.95rem;
+}
+
+.course-features {
+  margin-bottom: 0.7rem;
+  padding-left: 1.2rem;
+  list-style-position: inside;
+}
+
+.course-card ul {
+  margin-left: 0;
+  padding-left: 1.2rem;
+}
+
+.course-features li {
+  margin-bottom: 0.2rem;
+}
+
+/* Footer */
+footer {
+  background-color: #111;
+  color: #fff;
+  padding: 3rem 2rem 1rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.footer-section h4 {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.footer-section a:hover, .footer-section a:focus {
+  color: #fff;
+  background: #222;
+  outline: 2px solid #fff;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #fff;
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    padding: 0.5rem 1rem;
+  }
+  
+  .main-nav {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .main-nav a {
+    flex-shrink: 0;
+  }
+  
+  .main-nav img {
+    width: 60px !important;
+    height: 60px !important;
+    margin-right: 0.5rem !important;
+  }
+  
+  .main-nav span {
+    font-size: 1rem !important;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    text-align: center;
+    gap: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-top: 1px solid #eee;
+    z-index: 1000;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .nav-links a {
+    padding: 1rem;
+    display: block;
+    border-radius: 0;
+  }
+  
+  .nav-links a:hover,
+  .nav-links a.active {
+    background-color: #f5f5f5;
+    color: #111;
+  }
+  
+  /* Hamburger menu button */
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #111;
+  }
+  
+  .menu-toggle:focus {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Accessibility Features */
+:focus {
+  outline: 3px solid #111;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  .btn {
+    background: #fff !important;
+    color: #000 !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 0 3px #fff !important;
+  }
+  .btn:hover, .btn:focus {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 0 3px #fff !important;
+  }
+  .course-card {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+  }
+  .course-card h3, .course-card p, .course-features li {
+    color: #fff !important;
+  }
+}
+
+/* Horizontal course cards for index.html */
+.index-course-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.index-course-row .course-card {
+  flex: 1 1 300px;
+  max-width: 350px;
+  min-width: 250px;
+}
+
+/* Improved spacing for courses page */
+.course-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: flex-start;
+  margin-bottom: 2rem;
+}
+
+.category {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border: 2px solid #eee;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.course-categories {
+  margin-top: 3rem;
+}
+
+.category h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111;
+  letter-spacing: 1px;
+}
+
+.courses-hero {
+  text-align: center;
+  margin: 0 auto 2.5rem auto;
+  max-width: 700px;
+  padding: 2.5rem 1rem 1.5rem 1rem;
+}
+.courses-hero h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #111;
+}
+.courses-hero p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0;
+}
+
+.tool-card-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border: 2px solid #eee;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+.tool-card-container:nth-child(even) {
+  background: #f8f8f8;
+}
+.tool-card {
+  text-align: center;
+}
+.tool-card h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111;
+  letter-spacing: 1px;
+}
+
+/* Tools page styles */
+.tools-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #222, #111);
+  color: #fff;
+}
+
+.tools-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.tools-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.tools-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tools-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #111;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.tools-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tool-features {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+  list-style-position: inside;
+}
+
+.tool-features li {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Features page styles */
+.features-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #222, #111);
+  color: #fff;
+}
+
+.features-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.features-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.features-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #111;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.feature-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: 2px solid #000;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  max-width: 350px;
+  flex: 1 1 300px;
+}
+
+.feature-card:hover, .feature-card:focus-within {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  border-color: #111;
+  transform: translateY(-4px) scale(1.01);
+}
+
+.feature-card h3 {
+  color: #111;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.feature-card p {
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.feature-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feature-card ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #333;
+}
+
+.feature-card ul li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #111;
+  font-weight: bold;
+}
+
+/* Responsive adjustments for tools and features */
+@media (max-width: 768px) {
+  .tools-hero h1,
+  .features-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .tools-section,
+  .features-section {
+    padding: 2rem 1rem;
+  }
+  
+  .feature-card {
+    max-width: 100%;
+  }
+  
+  .tool-card-container {
+    flex-direction: column !important;
+    padding: 1.5rem;
+  }
+}
+
+/* Remove old lesson page styles that conflict */
+.lesson-main-container, .editor-container, .output-container {
+  /* These are now handled by more specific rules */
+}
+
+/* Deprecate old sidebar layout */
+.lesson-page-container {
+    display: block; /* Change from flex */
+}
+.lesson-sidebar, .lesson-list {
+    display: none; /* Hide old sidebar elements */
+}
+
+
+/* NEW LESSON LAYOUT STYLES */
+.lesson-container-new {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.lesson-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.lesson-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.lesson-topic-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.topic-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.topic-btn:hover {
+    background: #e0e0e0;
+    border-color: #bbb;
+}
+
+.topic-btn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+    font-weight: bold;
+}
+
+.lesson-body-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start; /* Align columns to the top */
+    margin-top: 2rem;
+}
+
+.lesson-description-column {
+    flex: 1 1 35%; /* Left column takes up ~35% of the space */
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.lesson-description-column h3:focus {
+    outline: 2px solid #58a6ff;
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+.lesson-interactive-column {
+    flex: 1 1 65%; /* Right column takes up ~65% */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Space between editor and output containers */
+}
+
+.lesson-editor-container {
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
+    background: #fff; /* Give it a background */
+}
+
+.lesson-editor-container .lesson-controls {
+    margin-bottom: 1.5rem; /* Space between buttons and editor */
+}
+
+.lesson-output-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* This container is a wrapper, so no background/border here */
+}
+
+.lesson-navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem auto 0;
+    padding: 0;
+    border: none;
+    max-width: 400px;
+    min-height: 40px;
+}
+
+.output-box-separate, .ai-feedback-box {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 120px;
+}
+
+.output-box-separate h4, .ai-feedback-box h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.75rem;
+}
+
+.output-box-separate pre {
+    background: none;
+    padding: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    flex-grow: 1;
+    color: #333;
+}
+
+.ai-feedback-box .placeholder-text {
+    color: #888;
+}
+
+.progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 10px;
+    width: 100%;
+    margin: 1.5rem 0 0; /* Add margin-top */
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background-color: #58a6ff;
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.4s ease-in-out;
+}
+
+/* Remove old layout styles */
+.lesson-main-content {
+    display: block; /* Override old flex styles */
+}
+.lesson-content-area {
+    /* No longer used */
+}
+
+.ai-feedback-markdown {
+    flex-grow: 1;
+    padding-left: 1rem; /* Add padding to fix text alignment */
+}
+
+.ai-feedback-markdown code {
+    background-color: #3a3a3c;
+    color: #a5d6ff;
+    padding: 0.2em 0.4em;
+    margin: 0 0.2em;
+    border-radius: 3px;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+    font-size: 0.9em;
+}
+
+.ai-feedback-markdown pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.ai-feedback-markdown ul, .ai-feedback-markdown ol {
+    padding-left: 25px; /* Adjust list padding as well */
+}
+
+@media (max-width: 1024px) {
+    .lesson-body-content {
+        flex-direction: column;
+    }
+}

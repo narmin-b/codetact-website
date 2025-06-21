@@ -20,29 +20,61 @@
       --focus-color: #000000;
     }
 
+    /* Header scrolls with content */
+    header {
+      position: relative !important;
+      background: #fff !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+      width: 100% !important;
+    }
+
+    /* Ensure the main nav inside header is also properly positioned */
+    header .main-nav {
+      position: relative !important;
+      z-index: 1001 !important;
+    }
+
+    /* Remove mobile sticky override */
+    @media (max-width: 768px) {
+      header {
+        position: relative !important;
+        background: #fff !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        width: 100% !important;
+      }
+    }
+
     .lesson-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
     .editor-container {
-      min-height: 400px;
-      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 0;
       box-sizing: border-box;
+      flex-shrink: 0; /* Prevent shrinking to allow AI feedback box space */
+      max-height: 600px; /* Increase max height for vertical layout */
+      min-height: 400px;
     }
     #monaco-editor {
-      height: 400px !important;
+      height: 300px !important;
       min-height: 200px;
       border: 3px solid var(--border-color);
       border-radius: 4px;
       background: #fff;
       z-index: 1;
       display: block;
+      flex-shrink: 0; /* Prevent editor from shrinking */
     }
     .output-container {
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
+      flex: 1; /* Take up remaining space */
+      min-height: 150px; /* Ensure minimum height for output */
     }
     .output-header {
       display: flex;
@@ -55,8 +87,9 @@
       border: 2px solid var(--border-color);
     }
     .output-box {
-      flex: 1 1 60%;
-      min-height: 0;
+      flex: 1;
+      min-height: 150px;
+      max-height: 300px;
       background: var(--background-color);
       padding: 1rem;
       font-family: monospace;
@@ -170,24 +203,27 @@
       width: 100vw;
       max-width: none;
       margin: 0;
-      padding: 2.5rem 3vw;
+      padding: 1.5rem 3vw;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       align-items: stretch;
+      min-height: calc(100vh - 160px); /* Change to min-height to allow scrolling */
+      overflow: visible; /* Allow content to be visible */
     }
     .lesson-sidebar {
       width: 420px;
-      padding: 3rem 2rem;
+      padding: 1.5rem;
       border-right: 2px solid #eee;
       background: #fafafa;
-      overflow: hidden;
       font-size: 1.1rem;
       line-height: 1.6;
       display: flex;
       flex-direction: column;
-      height: 100%;
+      height: auto; /* Allow natural height */
       flex: 1 0 0;
+      align-self: stretch;
+      overflow: visible; /* Allow content to be visible */
     }
     .lesson-list {
       list-style: none;
@@ -240,36 +276,47 @@
       font-size: 1.1rem;
       color: #222;
       line-height: 1.7;
-      max-height: 340px;
-      overflow-y: auto;
+      overflow-y: auto; /* Keep scroll for long content */
       padding-right: 0.5rem;
       margin-bottom: 0;
-      flex: 1 1 auto;
+      flex: 1; /* Take up all available space */
+      min-height: 0; /* Allow shrinking */
+      display: flex;
+      flex-direction: column;
+    }
+    .lesson-description p {
+      margin: 0;
+      flex: 1;
     }
     .lesson-compiler {
       flex: 2 1 0;
-      padding: 3rem 2.5rem;
+      padding: 1.5rem 2rem;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
       min-width: 0;
       font-size: 1.15rem;
       line-height: 1.7;
+      height: auto; /* Allow natural height */
+      overflow: visible; /* Allow content to be visible */
     }
-    .editor-container {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 0;
-      box-sizing: border-box;
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+    .lesson-nav-bar {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
     }
     .editor-controls {
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1rem;
       margin-left: 0;
     }
     @media (max-width: 900px) {
@@ -321,19 +368,9 @@
         gap: 0.5rem;
       }
     }
-    .output-container {
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-    }
-    .editor-container {
-      min-height: 400px;
-      height: 100%;
-      box-sizing: border-box;
-    }
     .lesson-progress-container {
       width: 100%;
-      padding: 2rem 3vw;
+      padding: 1rem 3vw;
       background: #f8f8f8;
       border-bottom: 2px solid #eee;
     }
@@ -420,6 +457,10 @@
     }
     html, body {
       height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scrolling but allow vertical */
+      overflow-y: auto;
     }
     footer,
     .footer-content,
@@ -483,6 +524,27 @@
       color: #fff;
       border-color: #111;
     }
+    .lesson-nav-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 1rem;
+      margin-top: -0.5rem;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+    }
+    .lesson-nav-btn {
+      background: #fff;
+      color: #111;
+      border: 3px solid #111;
+      border-radius: 6px;
+      padding: 0.8rem 1.8rem; /* Bigger padding */
+      font-size: 1.2rem; /* Bigger font */
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      margin-left: 0.5rem;
+    }
     .lesson-end-btn {
       background: #1b5e20;
       color: #fff;
@@ -499,6 +561,62 @@
       background: #fff;
       color: #1b5e20;
       border-color: #1b5e20;
+    }
+    .ai-feedback-box {
+      background: #f8f8f8;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 120px;
+      max-height: 200px;
+      overflow: visible;
+    }
+    .ai-feedback-header {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #111;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ddd;
+    }
+    .ai-feedback-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+    }
+    .ai-feedback-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .ai-feedback-actions .btn {
+      background: #111;
+      color: #fff;
+      border: 2px solid #111;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ai-feedback-actions .btn:hover,
+    .ai-feedback-actions .btn:focus {
+      background: #fff;
+      color: #111;
+      border-color: #111;
     }
   </style>
 </head>
@@ -524,9 +642,9 @@
     <div class="lesson-progress-labels">
       <div class="progress-segment-label" data-lesson="introduction">Introduction</div>
       <div class="progress-segment-label" data-lesson="variables">Variables</div>
-      <div class="progress-segment-label" data-lesson="loops">Loops</div>
-      <div class="progress-segment-label" data-lesson="functions">Functions</div>
-      <div class="progress-segment-label" data-lesson="practice">Practice</div>
+      <div class="progress-segment-label" data-lesson="strings">Strings</div>
+      <div class="progress-segment-label" data-lesson="operations">Operations</div>
+      <div class="progress-segment-label" data-lesson="challenge">Challenge</div>
     </div>
     <div class="lesson-progress-bar">
       <div class="progress-segment" data-lesson="introduction">
@@ -537,17 +655,17 @@
         <div class="progress-fill" style="width: 0%"></div>
         <span class="progress-label">Variables</span>
       </div>
-      <div class="progress-segment" data-lesson="loops">
+      <div class="progress-segment" data-lesson="strings">
         <div class="progress-fill" style="width: 0%"></div>
-        <span class="progress-label">Loops</span>
+        <span class="progress-label">Strings</span>
       </div>
-      <div class="progress-segment" data-lesson="functions">
+      <div class="progress-segment" data-lesson="operations">
         <div class="progress-fill" style="width: 0%"></div>
-        <span class="progress-label">Functions</span>
+        <span class="progress-label">Operations</span>
       </div>
-      <div class="progress-segment" data-lesson="practice">
+      <div class="progress-segment" data-lesson="challenge">
         <div class="progress-fill" style="width: 0%"></div>
-        <span class="progress-label">Practice</span>
+        <span class="progress-label">Challenge</span>
       </div>
     </div>
   </div>
@@ -557,29 +675,27 @@
       <h2 id="course-title">Course: Python Basics</h2>
       <div id="current-lesson-title" style="font-size:1.3rem;font-weight:bold;margin-bottom:0.75rem;color:#111;">Introduction</div>
       <div class="lesson-description">
-        <p>Welcome to Python Basics! In this lesson, you'll learn the fundamentals of Python programming, including syntax, variables, and how to write your first program.<br><br>
-        Python is a versatile and beginner-friendly language used in web development, data science, automation, and more. You'll start by understanding what makes Python unique and why it's a great first language.<br><br>
-        By the end of this lesson, you'll be able to write and run your first Python script. Let's get started on your coding journey!<br><br>
-        Remember, practice is key to mastering programming. Don't hesitate to experiment with code examples and try things on your own.</p>
+        <p>Welcome to your first Python lesson! Python is a powerful, high-level, and easy-to-learn programming language. It is widely used for web development, data analysis, artificial intelligence, and scientific computing.<br><br>In this lesson, we will write our first line of Python code. The goal is to display a message on the screen. We'll use the <code>print()</code> function for this.</p>
       </div>
     </aside>
     <section class="lesson-compiler">
-      <div class="lesson-nav-bar" style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.5rem; gap: 0.5rem;">
-        <button id="prev-lesson-btn" class="lesson-nav-btn" style="margin-right: 0.5rem; display: none;">Previous</button>
-        <button id="next-lesson-btn" class="lesson-nav-btn">Next</button>
-        <button id="end-lesson-btn" class="lesson-nav-btn lesson-end-btn" style="display: none; font-size: 1.2rem; padding: 0.7rem 2rem; font-weight: bold;">End</button>
-      </div>
-      <!-- Controls row above the editor -->
-      <div class="editor-controls">
-        <label for="language-selector" class="sr-only">Select programming language</label>
-        <select id="language-selector" class="language-selector" aria-label="Select programming language">
-          <option value="python">Python</option>
-          <option value="javascript">JavaScript</option>
-          <option value="cpp">C++</option>
-          <option value="csharp">C#</option>
-        </select>
-        <button id="run-button" class="run-button">Run Code</button>
-        <span id="run-status" aria-live="polite"></span>
+      <div class="controls-row">
+        <div class="lesson-nav-bar">
+          <button id="prev-lesson-btn" class="lesson-nav-btn" style="display: none;">Previous</button>
+          <button id="next-lesson-btn" class="lesson-nav-btn">Next</button>
+          <button id="end-lesson-btn" class="lesson-nav-btn lesson-end-btn" style="display: none;">End</button>
+        </div>
+        <div class="editor-controls">
+          <label for="language-selector" class="sr-only">Select programming language</label>
+          <select id="language-selector" class="language-selector" aria-label="Select programming language">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="cpp">C++</option>
+            <option value="csharp">C#</option>
+          </select>
+          <button id="run-button" class="run-button">Run Code</button>
+          <span id="run-status" aria-live="polite"></span>
+        </div>
       </div>
       <!-- Code Editor and Output -->
       <div class="editor-container">
@@ -592,9 +708,14 @@
         </div>
       </div>
       <!-- AI Feedback at the bottom -->
-      <div id="ai-feedback-container">
-        <strong>AI Feedback:</strong> <span id="ai-feedback">No feedback yet. Click "Check with AI" to get suggestions.</span>
-        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem;">
+      <div id="ai-feedback-container" class="ai-feedback-box">
+        <div class="ai-feedback-header">
+          <strong>AI Feedback:</strong>
+        </div>
+        <div class="ai-feedback-content">
+          <span id="ai-feedback">No feedback yet. Click "Check with AI" to get suggestions.</span>
+        </div>
+        <div class="ai-feedback-actions">
           <button id="ai-check-btn" class="btn">Check with AI</button>
         </div>
       </div>
@@ -638,43 +759,96 @@
     // Lesson data
     const lessons = {
       introduction: {
-        title: 'Introduction',
-        description: `Welcome to Python Basics! In this lesson, you'll learn the fundamentals of Python programming, including syntax, variables, and how to write your first program.<br><br>
-        Python is a versatile and beginner-friendly language used in web development, data science, automation, and more. You'll start by understanding what makes Python unique and why it's a great first language.<br><br>
-        By the end of this lesson, you'll be able to write and run your first Python script. Let's get started on your coding journey!<br><br>
-        Remember, practice is key to mastering programming. Don't hesitate to experiment with code examples and try things on your own.`
+        title: 'Introduction to Python',
+        description: `Welcome to your first Python lesson! Python is a powerful, high-level, and easy-to-learn programming language. It is widely used for web development, data analysis, artificial intelligence, and scientific computing.<br><br>In this lesson, we will write our first line of Python code. The goal is to display a message on the screen. We'll use the <code>print()</code> function for this.`,
+        code: `print("Hello, Python learner!")`
       },
       variables: {
-        title: 'Variables',
-        description: `Learn about variables in Python, how to declare them, and the different data types available. This lesson covers strings, numbers, and basic variable operations.<br><br>
-        Variables are like containers for storing data values. In Python, you don't need to declare the type of variable explicitly—Python figures it out for you.<br><br>
-        You'll see how to assign values, change them, and use variables in calculations. Understanding variables is essential for all programming tasks.<br><br>
-        Try creating variables of different types and printing their values to the screen!`
+        title: 'Variables and Data Types',
+        description: `In programming, we use variables to store information. Think of them as labeled jars where you can keep data. In Python, you can create a variable by giving it a name and assigning a value to it.<br><br>Python has several built-in data types. The most common are:<br>
+        - <strong>Text Type:</strong> <code>str</code> (e.g., "Hello")<br>
+        - <strong>Numeric Types:</strong> <code>int</code> (e.g., 20), <code>float</code> (e.g., 20.5)<br>
+        - <strong>Boolean Type:</strong> <code>bool</code> (<code>True</code> or <code>False</code>)<br><br>
+        Let's create some variables of different types.`,
+        code: `# String variable
+name = "CodeTact"
+print(name)
+
+# Integer variable
+year = 2024
+print(year)
+
+# Float variable
+version = 1.0
+print(version)
+
+# Boolean variable
+is_fun = True
+print(is_fun)`
       },
-      loops: {
-        title: 'Loops',
-        description: `Master Python loops including for loops and while loops. Learn how to iterate through data structures and control program flow with loop statements.<br><br>
-        Loops help you repeat actions efficiently. You'll learn the difference between for and while loops, and when to use each.<br><br>
-        Practice writing loops to process lists, repeat actions, and solve problems. Loops are a fundamental building block in programming.<br><br>
-        Challenge yourself to write a loop that prints numbers from 1 to 10!`
+      strings: {
+        title: 'Working with Strings',
+        description: `Strings are sequences of characters, enclosed in single or double quotes. You can perform many operations with strings.<br><br><strong>Concatenation:</strong> You can combine strings using the <code>+</code> operator.<br><br><strong>f-strings:</strong> A more modern and readable way to embed expressions inside string literals, prefixed with an 'f'.`,
+        code: `first_name = "Ada"
+last_name = "Lovelace"
+
+# Concatenation
+full_name = first_name + " " + last_name
+print("Full Name: " + full_name)
+
+# f-string
+age = 36
+message = f"{full_name} was an English mathematician and writer, known for her work on Charles Babbage's proposed mechanical general-purpose computer. She was {age} when she died."
+print(message)`
       },
-      functions: {
-        title: 'Functions',
-        description: `Discover how to create and use functions in Python. Learn about parameters, return values, and how to organize your code into reusable blocks.<br><br>
-        Functions help you break your code into manageable pieces. You'll see how to define a function, call it, and pass information to it.<br><br>
-        Writing functions makes your code cleaner and easier to maintain. You'll also learn about scope and how variables work inside functions.<br><br>
-        Try writing a function that greets the user by name!`
+      operations: {
+        title: 'Basic Arithmetic Operations',
+        description: `Python can be used as a powerful calculator. It supports all the basic arithmetic operations.<br><br>
+        - <strong>Addition:</strong> <code>+</code><br>
+        - <strong>Subtraction:</strong> <code>-</code><br>
+        - <strong>Multiplication:</strong> <code>*</code><br>
+        - <strong>Division:</strong> <code>/</code> (results in a float)<br>
+        - <strong>Floor Division:</strong> <code>//</code> (results in an integer)<br>
+        - <strong>Modulus:</strong> <code>%</code> (remainder of a division)<br>
+        - <strong>Exponentiation:</strong> <code>**</code> (power of)`,
+        code: `a = 15
+b = 4
+
+print(f"a + b = {a + b}")
+print(f"a - b = {a - b}")
+print(f"a * b = {a * b}")
+print(f"a / b = {a / b}")
+print(f"a // b = {a // b}")
+print(f"a % b = {a % b}")
+print(f"a ** b = {a ** b}")`
       },
-      practice: {
-        title: 'Practice',
-        description: `Put your Python knowledge to the test with hands-on exercises and coding challenges. Practice what you've learned in previous lessons.<br><br>
-        This section includes problems that require you to use variables, loops, and functions together.<br><br>
-        The more you practice, the more confident you'll become. Don't worry if you make mistakes—it's all part of the learning process.<br><br>
-        Good luck, and have fun coding!`
+      challenge: {
+        title: 'Your First Challenge',
+        description: `Time to apply what you've learned! Your challenge is to create a personalized welcome message.<br><br>
+        <strong>Instructions:</strong><br>
+        1. Create a variable for your first name.<br>
+        2. Create a variable for your last name.<br>
+        3. Create a personalized welcome message using an f-string.<br>
+        4. The message should be: "Hello, [FirstName] [LastName]! Welcome to your coding journey at CodeTact."<br>
+        5. Print the message to the output.`,
+        code: `# Write your code here
+
+# 1. Create a variable for your first name
+first_name = "..."
+
+# 2. Create a variable for your last name
+last_name = "..."
+
+# 3. Create the welcome message
+welcome_message = f"Hello, {first_name} {last_name}! Welcome to your coding journey at CodeTact."
+
+# 4. Print the message
+print(welcome_message)
+`
       }
     };
 
-    const lessonOrder = ['introduction', 'variables', 'loops', 'functions', 'practice'];
+    const lessonOrder = ['introduction', 'variables', 'strings', 'operations', 'challenge'];
     let currentLesson = 'introduction';
 
     // Function to update lesson description
@@ -688,6 +862,10 @@
       const lessonTitleDiv = document.getElementById('current-lesson-title');
       if (lessonTitleDiv) {
         lessonTitleDiv.textContent = lesson.title;
+      }
+      // Set editor content if editor is ready
+      if (editorInstance && lesson.code) {
+        editorInstance.setValue(lesson.code);
       }
       // Reset scroll and progress fill
       if (descriptionDiv) {
@@ -703,6 +881,11 @@
         const fill = segment.querySelector('.progress-fill');
         if (fill) fill.style.width = `${percent * 100}%`;
       }
+    }
+
+    // Function to fill progress bar for a lesson
+    function fillProgressBar(lessonKey) {
+      updateProgressFill(lessonKey, 1); // Fill to 100%
     }
 
     // Function to handle scroll and update fill
@@ -753,7 +936,7 @@
 
     require(['vs/editor/editor.main'], function () {
       editorInstance = monaco.editor.create(document.getElementById('monaco-editor'), {
-        value: getDefaultCode(languageSelector.value),
+        value: lessons[lessonOrder[0]].code,
         language: getMonacoLanguage(languageSelector.value),
         theme: 'vs', // Using default light theme for maximum contrast
         automaticLayout: true,
@@ -786,12 +969,8 @@
           horizontalScrollbarSize: 12
         }
       });
-    });
-
-    languageSelector.addEventListener('change', function() {
-      const language = this.value;
-      editorInstance.setValue(getDefaultCode(language));
-      monaco.editor.setModelLanguage(editorInstance.getModel(), getMonacoLanguage(language));
+      // Now that editor is initialized, ensure it has the correct content
+      updateLessonDescription(currentLesson);
     });
 
     function getMonacoLanguage(language) {
@@ -801,21 +980,6 @@
         case 'cpp': return 'cpp';
         case 'csharp': return 'csharp';
         default: return 'python';
-      }
-    }
-
-    function getDefaultCode(language) {
-      switch(language) {
-        case 'python':
-          return 'print("Hello, CodeTact!")';
-        case 'javascript':
-          return 'console.log("Hello, CodeTact!");';
-        case 'cpp':
-          return '#include <iostream>\n\nint main() {\n    std::cout << "Hello, CodeTact!" << std::endl;\n    return 0;\n}';
-        case 'csharp':
-          return 'Console.WriteLine("Hello, CodeTact!");';
-        default:
-          return 'print("Hello, CodeTact!")';
       }
     }
 
@@ -905,6 +1069,10 @@
       if (course) {
         languageSelector.value = course.lang;
         courseTitle.textContent = `Course: ${course.title}`;
+        // The language selector change listener is gone, so we have to update the model language manually
+        if (editorInstance) {
+          monaco.editor.setModelLanguage(editorInstance.getModel(), getMonacoLanguage(course.lang));
+        }
       }
     }
 
@@ -937,11 +1105,14 @@
     nextBtn.addEventListener('click', function() {
       const idx = lessonOrder.indexOf(currentLesson);
       if (idx < lessonOrder.length - 1) {
+        fillProgressBar(currentLesson);
         navigateToLesson(lessonOrder[idx + 1]);
         updateNavButtons();
       }
     });
     endBtn.addEventListener('click', function() {
+      fillProgressBar(currentLesson);
+      
       // Check if all lessons are fully completed
       let allComplete = true;
       for (const lessonKey of lessonOrder) {
